@@ -1,6 +1,15 @@
 import axios from 'axios'
 
-const API_BASE_URL = window.location.origin.replace(':5000', ':8000') + '/api'
+const getBackendURL = () => {
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:8000/api'
+  }
+  const domain = window.location.hostname
+  const backendDomain = domain.replace(/^([^.]+)/, '$1-8000')
+  return `https://${backendDomain}/api`
+}
+
+const API_BASE_URL = getBackendURL()
 
 const api = axios.create({
   baseURL: API_BASE_URL,
