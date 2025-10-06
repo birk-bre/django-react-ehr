@@ -39,27 +39,46 @@ node --version
 ### 1. Setup (First Time)
 
 ```bash
-./setup.sh
+python setup.py
 ```
 
-This installs everything and sets up the database.
+This installs everything and sets up the database. Works on Windows, macOS, and Linux.
 
 ### 2. Run the Application
 
-**Option A - Both servers together:**
-
 ```bash
-./dev.sh
+python dev.py
 ```
 
-**Option B - Separate terminals:**
+This will show you a menu with options to:
+
+- Start development servers (backend + frontend)
+- Reset database
+- Seed database with sample data
+
+### 3. Manual Server Management (Optional)
+
+If you prefer to run servers separately, you can still do so after setup by activating the virtual environment:
+
+**macOS/Linux:**
 
 ```bash
-# Terminal 1 - Backend
-./run-backend.sh
+source venv/bin/activate
+python manage.py runserver 8000        # Backend
+```
 
-# Terminal 2 - Frontend
-./run-frontend.sh
+**Windows:**
+
+```bash
+venv\Scripts\activate
+python manage.py runserver 8000        # Backend
+```
+
+**Frontend (all platforms):**
+
+```bash
+cd frontend
+npm run dev                             # Frontend
 ```
 
 ### 3. Access the App
@@ -129,13 +148,23 @@ npm run build                         # Build for production
 
 ## Reset Database
 
-If you want to start fresh:
+If you want to start fresh, run the development manager:
 
 ```bash
-./reset-db.sh
+python dev.py
 ```
 
-This deletes the database and creates a new one.
+Then select option 2 "Reset Database" from the menu. This deletes the database and creates a new one.
+
+## Sample Data
+
+To populate your database with sample patients and records for testing:
+
+```bash
+python dev.py
+```
+
+Then select option 3 "Seed Database with Sample Data" from the menu.
 
 ## Troubleshooting
 
