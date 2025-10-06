@@ -61,11 +61,11 @@ export interface VitalSign {
   blood_pressure_diastolic: number;
   heart_rate: number;
   temperature: number;
-  respiratory_rate: number;
-  oxygen_saturation: number;
   weight: number;
-  height: number;
-  recorded_by: string;
+  height: number | null;
+  oxygen_saturation: number | null;
+  notes: string;
+  created_at: string;
 }
 
 export interface Appointment {

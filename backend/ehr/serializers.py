@@ -4,49 +4,48 @@ from .models import Patient, MedicalRecord, Medication, VitalSign, Appointment
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = '__all__'
+        fields = [
+            'id', 'medical_record_number', 'first_name', 'last_name', 
+            'date_of_birth', 'gender', 'blood_type', 'phone', 'email', 
+            'address', 'emergency_contact_name', 'emergency_contact_phone', 
+            'created_at', 'updated_at'
+        ]
         read_only_fields = ['created_at', 'updated_at']
 
 class MedicalRecordSerializer(serializers.ModelSerializer):
-    patient_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = MedicalRecord
-        fields = '__all__'
+        fields = [
+            'id', 'patient', 'visit_date', 'chief_complaint', 'diagnosis', 
+            'treatment_plan', 'notes', 'doctor_name', 'created_at', 'updated_at'
+        ]
         read_only_fields = ['created_at', 'updated_at']
-    
-    def get_patient_name(self, obj):
-        return f"{obj.patient.first_name} {obj.patient.last_name}"
 
 class MedicationSerializer(serializers.ModelSerializer):
-    patient_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = Medication
-        fields = '__all__'
+        fields = [
+            'id', 'patient', 'medication_name', 'dosage', 'frequency', 
+            'start_date', 'end_date', 'prescribing_doctor', 'notes', 
+            'is_active', 'created_at', 'updated_at'
+        ]
         read_only_fields = ['created_at', 'updated_at']
-    
-    def get_patient_name(self, obj):
-        return f"{obj.patient.first_name} {obj.patient.last_name}"
 
 class VitalSignSerializer(serializers.ModelSerializer):
-    patient_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = VitalSign
-        fields = '__all__'
-        read_only_fields = ['created_at']
-    
-    def get_patient_name(self, obj):
-        return f"{obj.patient.first_name} {obj.patient.last_name}"
+        fields = [
+            'id', 'patient', 'recorded_at', 'blood_pressure_systolic', 
+            'blood_pressure_diastolic', 'heart_rate', 'temperature', 'weight', 
+            'height', 'oxygen_saturation', 'notes', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    patient_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = Appointment
-        fields = '__all__'
+        fields = [
+            'id', 'patient', 'appointment_date', 'doctor_name', 'department', 
+            'reason', 'status', 'notes', 'created_at', 'updated_at'
+        ]
         read_only_fields = ['created_at', 'updated_at']
-    
-    def get_patient_name(self, obj):
-        return f"{obj.patient.first_name} {obj.patient.last_name}"

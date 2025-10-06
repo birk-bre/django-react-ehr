@@ -28,8 +28,7 @@ function Patients() {
   const loadPatients = async () => {
     try {
       const response = await patientAPI.getAll();
-      console.log("Patients response:", response);
-      setPatients(Array.isArray(response.data) ? response.data : []);
+      setPatients(response.data.results || []);
     } catch (error) {
       console.error("Error loading patients:", error);
       setPatients([]);

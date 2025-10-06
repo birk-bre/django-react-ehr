@@ -49,12 +49,11 @@ function PatientDetail() {
           appointmentAPI.getAll(id),
         ]);
 
-      console.log("Medications fetched:");
       setPatient(patientRes.data);
-      setMedicalRecords(medicalRes.data);
-      setMedications(medRes.data);
-      setVitalSigns(vitalRes.data);
-      setAppointments(apptRes.data);
+      setMedicalRecords(medicalRes.data.results);
+      setMedications(medRes.data.results);
+      setVitalSigns(vitalRes.data.results);
+      setAppointments(apptRes.data.results);
     } catch (error) {
       console.error("Error loading patient data:", error);
     }

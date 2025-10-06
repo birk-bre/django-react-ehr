@@ -83,6 +83,7 @@ class VitalSign(models.Model):
     oxygen_saturation = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return f"{self.patient} - {self.recorded_at.strftime('%Y-%m-%d %H:%M')}"

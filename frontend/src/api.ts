@@ -1,4 +1,3 @@
-import axios, { AxiosInstance } from "axios";
 import type {
   Patient,
   PatientFormData,
@@ -9,65 +8,110 @@ import type {
   PaginatedResponse,
 } from "./types";
 
-const getBackendURL = (): string => {
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:8000/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+
+// A helper function to handle fetch requests and errors
+const apiFetch = async <T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> => {
+  const url = `${API_BASE_URL}${endpoint}`;
+  
+  const defaultOptions: RequestInit = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    ...options,
+  };
+
+  const response = await fetch(url, defaultOptions);
+
+  if (!response.ok) {
+    // Try to parse error response from the backend
+    const errorData = await response.json().catch(() => ({}));
+    const errorMessage =
+      errorData.detail || `API Error: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
   }
-  const domain = window.location.hostname;
-  const backendDomain = domain.replace(/^([^.]+)/, "$1-8000");
-  return `https://${backendDomain}/api`;
+
+  // Handle responses with no content
+  if (response.status === 204) {
+    return null as T;
+  }
+
+  return response.json();
 };
 
-const API_BASE_URL = getBackendURL();
-
-const api: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 export const patientAPI = {
-  getAll: () => api.get<PaginatedResponse<Patient>>("/patients/"),
-  getOne: (id: string | number) => api.get<Patient>(`/patients/${id}/`),
-  create: (data: PatientFormData) => api.post<Patient>("/patients/", data),
+  getAll: () => apiFetch<PaginatedResponse<Patient>>("/patients/"),
+  getOne: (id: string | number) => apiFetch<Patient>(`/patients/${id}/`),
+  create: (data: PatientFormData) =>
+    apiFetch<Patient>("/patients/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
   update: (id: string | number, data: Partial<PatientFormData>) =>
-    api.put<Patient>(`/patients/${id}/`, data),
-  delete: (id: string | number) => api.delete(`/patients/${id}/`),
+    apiFetch<Patient>(`/patients/${id}/`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+  delete: (id: string | number) =>
+    apiFetch<null>(`/patients/${id}/`, {
+      method: "DELETE",
+    }),
 };
 
 export const medicalRecordAPI = {
   getAll: (patientId: string | number) =>
-    api.get<MedicalRecord[]>("/medical-records/", {
-      params: { patient: patientId },
-    }),
+    apiFetch<PaginatedResponse<MedicalRecord>>(
+      `/medical-records/?patient=${patientId}`
+    ),
   create: (data: Partial<MedicalRecord>) =>
-    api.post<MedicalRecord>("/medical-records/", data),
+    apiFetch<MedicalRecord>("/medical-records/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 };
 
 export const medicationAPI = {
   getAll: (patientId: string | number) =>
-    api.get<Medication[]>("/medications/", { params: { patient: patientId } }),
+    apiFetch<PaginatedResponse<Medication>>(
+      `/medications/?patient=${patientId}`
+    ),
   create: (data: Partial<Medication>) =>
-    api.post<Medication>("/medications/", data),
+    apiFetch<Medication>("/medications/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 };
 
 export const vitalSignAPI = {
   getAll: (patientId: string | number) =>
-    api.get<VitalSign[]>("/vital-signs/", { params: { patient: patientId } }),
+    apiFetch<PaginatedResponse<VitalSign>>(
+      `/vital-signs/?patient=${patientId}`
+    ),
   create: (data: Partial<VitalSign>) =>
-    api.post<VitalSign>("/vital-signs/", data),
+    apiFetch<VitalSign>("/vital-signs/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 };
 
 export const appointmentAPI = {
   getAll: (patientId: string | number) =>
-    api.get<Appointment[]>("/appointments/", {
-      params: { patient: patientId },
-    }),
+    apiFetch<PaginatedResponse<Appointment>>(
+      `/appointments/?patient=${patientId}`
+    ),
   create: (data: Partial<Appointment>) =>
-    api.post<Appointment>("/appointments/", data),
+    apiFetch<Appointment>("/appointments/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
   update: (id: string | number, data: Partial<Appointment>) =>
-    api.patch<Appointment>(`/appointments/${id}/`, data),
+    apiFetch<Appointment>(`/appointments/${id}/`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
 };
 
-export default api;
