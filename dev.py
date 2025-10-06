@@ -213,13 +213,8 @@ class PatientEHRManager:
         cmd = [python_exe, "manage.py", "runserver", "8000"]
         
         try:
-            self.backend_process = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                universal_newlines=True,
-                bufsize=1
-            )
+            # Don't capture output - let it display directly to terminal
+            self.backend_process = subprocess.Popen(cmd)
             print("✓ Backend server starting on http://localhost:8000")
             return True
         except Exception as e:
@@ -231,13 +226,10 @@ class PatientEHRManager:
         print("Starting React frontend...")
         
         try:
+            # Don't capture output - let it display directly to terminal
             self.frontend_process = subprocess.Popen(
                 ["npm", "run", "dev"],
-                cwd="frontend",
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                universal_newlines=True,
-                bufsize=1
+                cwd="frontend"
             )
             print("✓ Frontend server starting on http://localhost:3000")
             return True
@@ -258,27 +250,45 @@ class PatientEHRManager:
             
     def cleanup(self):
         """Clean up processes"""
+        print("Stopping servers...")
+        
         if self.backend_process:
             try:
+                print("  Stopping backend server...")
                 if self.is_windows:
                     self.backend_process.terminate()
                 else:
                     self.backend_process.send_signal(signal.SIGTERM)
                 self.backend_process.wait(timeout=5)
+                print("  ✓ Backend server stopped")
+            except subprocess.TimeoutExpired:
+                print("  Force killing backend server...")
+                self.backend_process.kill()
+                print("  ✓ Backend server killed")
             except:
                 if self.backend_process.poll() is None:
                     self.backend_process.kill()
+                    print("  ✓ Backend server killed")
                     
         if self.frontend_process:
             try:
+                print("  Stopping frontend server...")
                 if self.is_windows:
                     self.frontend_process.terminate()
                 else:
                     self.frontend_process.send_signal(signal.SIGTERM)
                 self.frontend_process.wait(timeout=5)
+                print("  ✓ Frontend server stopped")
+            except subprocess.TimeoutExpired:
+                print("  Force killing frontend server...")
+                self.frontend_process.kill()
+                print("  ✓ Frontend server killed")
             except:
                 if self.frontend_process.poll() is None:
                     self.frontend_process.kill()
+                    print("  ✓ Frontend server killed")
+                    
+        print("All servers stopped.")
                     
     def monitor_processes(self):
         """Monitor both processes and handle output"""
@@ -293,25 +303,31 @@ class PatientEHRManager:
         print("Press Ctrl+C to stop both servers")
         print("=" * 50)
         print()
+        print("Server logs will appear below:")
+        print("-" * 50)
+        print()
         
         try:
             while True:
+                # Check if processes are still running
                 backend_running = self.backend_process and self.backend_process.poll() is None
                 frontend_running = self.frontend_process and self.frontend_process.poll() is None
                 
                 if not backend_running and not frontend_running:
-                    print("Both servers have stopped.")
+                    print("\nBoth servers have stopped.")
                     break
                 elif not backend_running:
-                    print("Backend server has stopped unexpectedly.")
+                    print("\nBackend server has stopped unexpectedly.")
                     break
                 elif not frontend_running:
-                    print("Frontend server has stopped unexpectedly.")
+                    print("\nFrontend server has stopped unexpectedly.")
                     break
                     
-                time.sleep(1)
+                # Let the processes run and display their output naturally
+                time.sleep(0.5)
                 
         except KeyboardInterrupt:
+            print("\n\nShutting down servers...")
             pass
             
     def run(self):

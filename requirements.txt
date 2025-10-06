@@ -4,15 +4,6 @@
 # Core Django
 django>=5.2.7
 djangorestframework>=3.16.1
-
-# CORS handling
 django-cors-headers>=4.9.0
-
-# Date utilities
 python-dateutil>=2.9.0
 
-# Development dependencies (optional)
-# Uncomment if needed:
-# ipython>=8.12.0
-# django-debug-toolbar>=4.0.0
-# pytest-django>=4.5.0
