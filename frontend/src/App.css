@@ -6,6 +6,7 @@
 
 .app {
   min-height: 100vh;
+  min-width: 100vw;
   background: #f5f7fa;
 }
 
@@ -13,7 +14,7 @@
   background: #2563eb;
   color: white;
   padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -73,7 +74,7 @@
   padding: 2rem;
   border-radius: 0.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .form-grid {
@@ -103,13 +104,13 @@
   border-radius: 0.5rem;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
 .patient-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .patient-card h3 {
@@ -133,7 +134,7 @@
   background: white;
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .back-link {
