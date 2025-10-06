@@ -149,7 +149,6 @@ PatientEHR/
 │
 ├── dev.py                # Development server manager
 ├── setup.py              # Initial project setup script
-├── BEST_PRACTICES.md     # Code quality guide and anti-patterns
 └── README.md             # This file
 ```
 
@@ -212,29 +211,12 @@ class MedicalRecordViewSet(PatientFilterMixin, viewsets.ModelViewSet):
     # Inherits patient filtering from the mixin
 ```
 
-See `backend/ehr/views.py` for implementation examples and `BEST_PRACTICES.md` for a detailed explanation of this pattern.
-
 **Error Handling**  
-The current implementation has basic error handling. Production applications should include:
+The current implementation has basic error handling.
 
-- Structured logging
-- Custom exception handlers
-- User-friendly error messages
-- Error tracking services (Sentry, Rollbar)
+## Area for Improvement
 
-**Testing**  
-While this project doesn't include tests, production applications should have:
-
-- Unit tests for models and serializers
-- Integration tests for API endpoints
-- Frontend component tests
-- End-to-end tests for critical user flows
-
-## Learning Exercises
-
-These exercises will help you understand the codebase and practice full-stack development:
-
-### Beginner Level
+### Low hanging fruit
 
 1. **Add a Field to Patient Model**
 
@@ -247,7 +229,7 @@ These exercises will help you understand the codebase and practice full-stack de
    - Use Django's filter backends
    - Update the frontend to use the filter
 
-### Intermediate Level
+### Time consuming
 
 3. **Study the Mixin Pattern**
 
@@ -260,7 +242,7 @@ These exercises will help you understand the codebase and practice full-stack de
    - Add visual feedback for validation errors
    - Ensure server-side validation catches edge cases
 
-### Advanced Level
+### Very time consuming
 
 5. **Add Authentication**
 
@@ -319,4 +301,3 @@ npm install
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [REST API Best Practices](https://restfulapi.net/)
-- **[BEST_PRACTICES.md](BEST_PRACTICES.md)** - Code quality guide, security considerations, and production checklist
