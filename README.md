@@ -1,11 +1,13 @@
-# Patient EHR: Your First Full-Stack Adventure
+# Patient EHR: Full-Stack app with React & Django
 
-This project is a simple Electronic Health Record (EHR) system designed to be your very first step into the world of building complete web applications.
+This project is a simple Electronic Health Record (EHR) system built with a React frontend and a Django backend.
 
 Think of this project as a restaurant:
 
-- **The Frontend (React)** is the **dining room**. It's everything the customer (user) sees and interacts with—the tables, the menus, the decor. It's built to be pleasant and intuitive.
-- **The Backend (Django)** is the **kitchen**. It's where the food is made, where the orders are processed, and where all the important ingredients are stored. The customer doesn't see the kitchen, but it's essential for the restaurant to function.
+- **The Frontend (React)** is the **dining room**. It's everything the customer (user) sees and interacts with—the tables, the menus, the decor. It's built to be pleasant and intuitive. Read the [frontend README](frontend/README.md) for more details.
+
+- **The Backend (Django)** is the **kitchen**. It's where the food is made, where the orders are processed, and where all the important ingredients are stored. The customer doesn't see the kitchen, but it's essential for the restaurant to function. Read the [backend README](backend/README.md) for more details.
+
 - **The API (Django REST Framework)** is the **waiter**. The waiter takes orders from the dining room, brings them to the kitchen, and then delivers the finished dishes back to the table. It’s the critical communication link between the frontend and backend.
 
 This project is intentionally kept simple so you can focus on learning the core concepts of full-stack development without getting lost.

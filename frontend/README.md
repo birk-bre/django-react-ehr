@@ -2,6 +2,8 @@
 
 This is the "dining room" of our application—it's what the user sees and interacts with. It is built with **React** and **Vite**, a modern and fast build tool.
 
+To understand what React is please read the [official React documentation](https://react.dev/learn).
+
 Think of this project as a **LEGO set**:
 
 - **`index.html` & `main.tsx` - The Baseplate:** These files are the foundation. `index.html` provides the single HTML page, and `main.tsx` is the entry point that tells React where to start building.
