@@ -1,4 +1,6 @@
-# Patient EHR: Full-Stack app with React & Django
+<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2h5bHV5Z3NzMGFhYzZjMTVhcnhqcTMyenNwbjFwbmtxZnVhaXJ4NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BMaE0wCQhcJj2/giphy.gif" />
+
+# Full-Stack app with React & Django
 
 This project is a simple Electronic Health Record (EHR) system built with a React frontend and a Django backend.
 
@@ -49,8 +51,19 @@ python setup.py
 This command starts both the backend and frontend development servers at the same time.
 
 ```bash
-# This script gives you a handy menu to manage the project
+# This script gives you a handy menu to manage the project.
 python dev.py
+```
+
+if you prefer to run them separately, you can do so as follows:
+
+```bash
+# Start the backend server
+python manage.py runserver
+
+# Start the frontend server
+# in the frontend folder run
+npm run dev
 ```
 
 Once the servers are running, you can access the application:
@@ -81,7 +94,7 @@ PatientEHR/
 │   │   └── App.tsx       # The main component that holds our app layout and routing
 │   └── README.md         # A guide to the frontend
 │
-├── dev.py                # Your friendly development script
+├── dev.py                # Development scripts
 ├── setup.py              # The initial setup script
 └── README.md             # You are here!
 ```
@@ -94,4 +107,6 @@ Now that you're set up, it's time to explore! Here are a few ideas to get you st
 2.  **Create a New Page:** Build a new React page that shows a dashboard of upcoming appointments.
 3.  **Explore the Code:** Read the `README.md` files in the `frontend` and `backend` folders to dive deeper into how each part works.
 
-Don't be afraid to experiment and break things. That's the best way to learn!
+Don't be afraid to experiment and break things. That's the best way to learn :)
+
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHNhdzZ2M3FkbnY4NHdsdHBwb3M3bTh0b3NxajducGphcjNqaDFnMSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/J1YFTAeTT3UAxnl6Bx/giphy.gif" />
