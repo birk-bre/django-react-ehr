@@ -10,7 +10,29 @@ import type {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
-// A helper function to handle fetch requests and errors
+/**
+ * Custom error class for API errors
+ * Provides structured error information
+ */
+export class APIError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+    public details?: Record<string, any>
+  ) {
+    super(message);
+    this.name = "APIError";
+  }
+}
+
+/**
+ * Generic fetch wrapper with error handling and type safety
+ *
+ * @param endpoint - API endpoint (e.g., "/patients/")
+ * @param options - Fetch options (method, headers, body, etc.)
+ * @returns Parsed JSON response
+ * @throws APIError on HTTP errors
+ */
 const apiFetch = async <T>(
   endpoint: string,
   options: RequestInit = {}
@@ -25,23 +47,48 @@ const apiFetch = async <T>(
     ...options,
   };
 
-  const response = await fetch(url, defaultOptions);
+  try {
+    const response = await fetch(url, defaultOptions);
 
-  if (!response.ok) {
-    // Try to parse error response from the backend
-    const errorData = await response.json().catch(() => ({}));
-    const errorMessage =
-      errorData.detail ||
-      `API Error: ${response.status} ${response.statusText}`;
-    throw new Error(errorMessage);
+    if (!response.ok) {
+      // Try to parse error response from the backend
+      let errorDetails: Record<string, any> = {};
+      try {
+        errorDetails = await response.json();
+      } catch {
+        // If JSON parsing fails, use default error message
+      }
+
+      const errorMessage =
+        errorDetails.detail ||
+        errorDetails.message ||
+        `HTTP ${response.status}: ${response.statusText}`;
+
+      throw new APIError(errorMessage, response.status, errorDetails);
+    }
+
+    // Handle responses with no content (e.g., 204 No Content)
+    if (response.status === 204) {
+      return null as T;
+    }
+
+    return response.json();
+  } catch (error) {
+    // Re-throw APIError as-is
+    if (error instanceof APIError) {
+      throw error;
+    }
+
+    // Handle network errors, timeout, etc.
+    if (error instanceof Error) {
+      throw new APIError(`Network error: ${error.message}`, 0, {
+        originalError: error,
+      });
+    }
+
+    // Unknown error
+    throw new APIError("An unknown error occurred", 0);
   }
-
-  // Handle responses with no content
-  if (response.status === 204) {
-    return null as T;
-  }
-
-  return response.json();
 };
 
 export const patientAPI = {
