@@ -55,7 +55,7 @@ class ProjectSetup:
         
         if not self.python_cmd:
             self.print_colored("Error: Python 3 is not installed or not found in PATH", 'red')
-            print("Please install Python 3.8+ from https://python.org/")
+            print("Please install Python 3.11+ from https://python.org/")
             return False
             
         try:
