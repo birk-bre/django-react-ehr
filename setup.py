@@ -135,7 +135,6 @@ class ProjectSetup:
             'django',
             'djangorestframework', 
             'django-cors-headers',
-            'python-dateutil'
         ]
         
         # Check if requirements.txt exists and use it
@@ -178,7 +177,10 @@ class ProjectSetup:
         
         # Ask to create superuser
         try:
-            response = input("Would you like to create a Django superuser? (y/n): ").strip().lower()
+            print("Would you like to create a Django superuser now? ")
+            print("This will allow you to access the admin interface.")
+            print("You can create one later with: python manage.py createsuperuser")
+            response = input("(y/n): ").strip().lower()
             if response in ['y', 'yes']:
                 print("Creating superuser...")
                 subprocess.run([str(venv_python), 'manage.py', 'createsuperuser'])
@@ -223,28 +225,7 @@ class ProjectSetup:
             
         print()
         return True
-        
-    def create_start_scripts(self):
-        """Create platform-specific start scripts"""
-        print("Creating convenience scripts...")
-        
-        # Create a simple Python launcher for Windows
-        if self.is_windows:
-            with open("start.bat", 'w') as f:
-                f.write("""@echo off
-echo Starting Patient EHR Development Manager...
-python dev.py
-pause
-""")
-            self.print_colored("✓ Created start.bat for Windows", 'green')
-        else:
-            # Make the Python script executable on Unix-like systems
-            try:
-                subprocess.run(['chmod', '+x', 'dev.py'], check=True)
-                subprocess.run(['chmod', '+x', 'setup.py'], check=True)
-                self.print_colored("✓ Made Python scripts executable", 'green')
-            except subprocess.CalledProcessError:
-                pass
+    
                 
     def print_completion_message(self):
         """Print setup completion message"""
@@ -304,11 +285,6 @@ pause
         # Setup frontend
         if not self.setup_frontend():
             return False
-            
-        # Create convenience scripts
-        self.create_start_scripts()
-        print()
-        
         # Print completion message
         self.print_completion_message()
         
