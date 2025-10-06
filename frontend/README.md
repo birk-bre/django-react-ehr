@@ -1,6 +1,6 @@
 # Frontend: The Dining Room (React)
 
-Welcome to the frontend! This is the "dining room" of our application—it's what the user sees and interacts with. It is built with **React** and **Vite**, a modern and fast build tool.
+This is the "dining room" of our application—it's what the user sees and interacts with. It is built with **React** and **Vite**, a modern and fast build tool.
 
 Think of this project as a **LEGO set**:
 
@@ -22,13 +22,13 @@ We've made some specific choices in this frontend to teach good development habi
 
 ### Environment Variables for Configuration (`.env.development`)
 
-In `api.ts`, the backend URL is loaded from `import.meta.env.VITE_API_BASE_URL`. 
+In `api.ts`, the backend URL is loaded from `import.meta.env.VITE_API_BASE_URL`.
 
 - **Why?** Hardcoding URLs is a bad idea. The backend URL might be different on your machine, on a coworker's machine, or in production. Environment variables let you configure the application for different environments without changing the code. Vite uses files like `.env` or `.env.development` to manage this.
 
 ### Centralized API Logic (`api.ts`)
 
-All the code for making API calls is in one place. 
+All the code for making API calls is in one place.
 
 - **Why?** This makes the code much easier to manage. If you need to change how authentication works or update an endpoint, you only have to do it in one file. Your components stay clean and focused on displaying the UI, not on the details of HTTP requests.
 
@@ -47,11 +47,13 @@ cd frontend
 ```
 
 - **Install dependencies (if you haven't run the main `setup.py`):**
+
   ```bash
   npm install
   ```
 
 - **Run the frontend dev server only:**
+
   ```bash
   npm run dev
   ```

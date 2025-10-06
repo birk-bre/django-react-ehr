@@ -48,12 +48,12 @@ function PatientDetail() {
           vitalSignAPI.getAll(id),
           appointmentAPI.getAll(id),
         ]);
-
-      setPatient(patientRes.data);
-      setMedicalRecords(medicalRes.data.results);
-      setMedications(medRes.data.results);
-      setVitalSigns(vitalRes.data.results);
-      setAppointments(apptRes.data.results);
+      console.error("Patient response:", patientRes); // --- IGNORE ---
+      setPatient(patientRes);
+      setMedicalRecords(medicalRes.results);
+      setMedications(medRes.results);
+      setVitalSigns(vitalRes.results);
+      setAppointments(apptRes.results);
     } catch (error) {
       console.error("Error loading patient data:", error);
     }

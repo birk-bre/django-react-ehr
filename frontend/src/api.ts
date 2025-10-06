@@ -16,7 +16,7 @@ const apiFetch = async <T>(
   options: RequestInit = {}
 ): Promise<T> => {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   const defaultOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,8 @@ const apiFetch = async <T>(
     // Try to parse error response from the backend
     const errorData = await response.json().catch(() => ({}));
     const errorMessage =
-      errorData.detail || `API Error: ${response.status} ${response.statusText}`;
+      errorData.detail ||
+      `API Error: ${response.status} ${response.statusText}`;
     throw new Error(errorMessage);
   }
 
@@ -114,4 +115,3 @@ export const appointmentAPI = {
       body: JSON.stringify(data),
     }),
 };
-
