@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { patientAPI } from "../api";
+import type { Patient, PatientFormData } from "../types";
 
 function Patients() {
-  const [patients, setPatients] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [formData, setFormData] = useState<PatientFormData>({
     medical_record_number: "",
     first_name: "",
     last_name: "",
@@ -28,9 +29,7 @@ function Patients() {
     try {
       const response = await patientAPI.getAll();
       console.log("Patients response:", response);
-      setPatients(
-        Array.isArray(response.data.results) ? response.data.results : []
-      );
+      setPatients(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error loading patients:", error);
       setPatients([]);
@@ -39,7 +38,7 @@ function Patients() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await patientAPI.create(formData);
@@ -64,7 +63,9 @@ function Patients() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 

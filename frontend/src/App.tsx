@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Patients from './pages/Patients'
-import PatientDetail from './pages/PatientDetail'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Patients from "./pages/Patients";
+import PatientDetail from "./pages/PatientDetail";
+import "./App.css";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
             </div>
           </div>
         </nav>
-        
+
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Patients />} />
@@ -26,7 +26,7 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
